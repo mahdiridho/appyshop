@@ -49,6 +49,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding: 0 16px;
       overflow: visible;
     }
+    pwa-update::part(updateToast) {
+      font-size: 12px;
+      min-width: none;
+      width: 200px;
+    }
 
   </style>
 
@@ -93,12 +98,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
     };
   </script>
-  <script type="module" src="src/components/shop-app.js"></script>
+  <script type="module">
+    import './src/components/shop-app.js';
+    import './pwabuilder-sw-register.js';
+  </script>
 
   <script>
     if ('serviceWorker' in window.navigator) {
       window.addEventListener('load', function() {
-        window.navigator.serviceWorker.register('service-worker.js', {scope: '/'});
+        navigator.serviceWorker.register("/pwabuilder-sw.js")
       });
     }
   </script>
