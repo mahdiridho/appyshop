@@ -9,7 +9,7 @@
  */
 
 import { PageViewElement } from './page-view-element.js';
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { repeat } from 'lit-html/directives/repeat.js';
 import { shopCommonStyle } from './shop-common-style.js';
 import './shop-image.js';

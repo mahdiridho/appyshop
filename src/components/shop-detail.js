@@ -9,7 +9,7 @@
  */
 
 import { PageViewElement } from './page-view-element.js';
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { shopButtonStyle } from './shop-button-style.js';
 import { shopCommonStyle } from './shop-common-style.js';
