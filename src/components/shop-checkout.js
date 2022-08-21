@@ -25,6 +25,7 @@ import { updateCheckoutState } from '../actions/checkout.js';
 import { clearCart } from '../actions/cart.js';
 import { announceLabel } from '../actions/app.js';
 import checkout from '../reducers/checkout.js';
+import '@jcshop/jc-checkout/jc-checkout.js';
 
 store.addReducers({
   checkout
@@ -222,165 +223,19 @@ class ShopCheckout extends connect(store)(PageViewElement) {
                     <shop-select>
                       <select id="shipCountry" name="shipCountry" required
                           aria-labelledby="shipCountryLabel shipAddressHeading">
-                        <option value="US" selected>United States</option>
-                        <option value="CA">Canada</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Indonesia" selected>Indonesia</option>
+                        <option value="United States">United States</option>
                       </select>
                       <shop-md-decorator aria-hidden="true">
                         <shop-underline></shop-underline>
                       </shop-md-decorator>
                     </shop-select>
                   </div>
-                  <h2 id="billAddressHeading">Billing Address</h2>
-                  <div class="billing-address-picker">
-                    <shop-checkbox>
-                      <input type="checkbox" id="setBilling" name="setBilling"
-                          .checked="${this._hasBillingAddress}"
-                          @change="${this._toggleBillingAddress}">
-                      <shop-md-decorator></shop-md-decorator aria-hidden="true">
-                    </shop-checkbox>
-                    <label for="setBilling">Use different billing address</label>
-                  </div>
-                  ${this._hasBillingAddress ? html`
-                    <div class="row input-row">
-                      <shop-input>
-                        <input type="text" id="billAddress" name="billAddress" pattern=".{5,}"
-                            placeholder="Address" required="${this._hasBillingAddress}"
-                            autocomplete="billing street-address"
-                            aria-labelledby="billAddressLabel billAddressHeading">
-                        <shop-md-decorator error-message="Invalid Address" aria-hidden="true">
-                          <label id="billAddressLabel">Address</label>
-                          <shop-underline></shop-underline>
-                        </shop-md-decorator>
-                      </shop-input>
-                    </div>
-                    <div class="row input-row">
-                      <shop-input>
-                        <input type="text" id="billCity" name="billCity" pattern=".{2,}"
-                            placeholder="City" required="${this._hasBillingAddress}"
-                            autocomplete="billing address-level2"
-                            aria-labelledby="billCityLabel billAddressHeading">
-                        <shop-md-decorator error-message="Invalid City" aria-hidden="true">
-                          <label id="billCityLabel">City</label>
-                          <shop-underline></shop-underline>
-                        </shop-md-decorator>
-                      </shop-input>
-                    </div>
-                    <div class="row input-row">
-                      <shop-input>
-                        <input type="text" id="billState" name="billState" pattern=".{2,}"
-                            placeholder="State/Province" required="${this._hasBillingAddress}"
-                            autocomplete="billing address-level1"
-                            aria-labelledby="billStateLabel billAddressHeading">
-                        <shop-md-decorator error-message="Invalid State/Province" aria-hidden="true">
-                          <label id="billStateLabel">State/Province</label>
-                          <shop-underline></shop-underline>
-                        </shop-md-decorator>
-                      </shop-input>
-                      <shop-input>
-                        <input type="text" id="billZip" name="billZip" pattern=".{4,}"
-                            placeholder="Zip/Postal Code" required="${this._hasBillingAddress}"
-                            autocomplete="billing postal-code"
-                            aria-labelledby="billZipLabel billAddressHeading">
-                        <shop-md-decorator error-message="Invalid Zip/Postal Code" aria-hidden="true">
-                          <label id="billZipLabel">Zip/Postal Code</label>
-                          <shop-underline></shop-underline>
-                        </shop-md-decorator>
-                      </shop-input>
-                    </div>
-                    <div class="column">
-                      <label id="billCountryLabel" class="shop-select-label">Country</label>
-                      <shop-select>
-                        <select id="billCountry" name="billCountry" required="${this._hasBillingAddress}"
-                            autocomplete="billing country"
-                            aria-labelledby="billCountryLabel billAddressHeading">
-                          <option value="US" selected>United States</option>
-                          <option value="CA">Canada</option>
-                        </select>
-                        <shop-md-decorator aria-hidden="true">
-                          <shop-underline></shop-underline>
-                        </shop-md-decorator>
-                      </shop-select>
-                    </div>
-                  ` : null}
                 </section>
 
                 <section>
-                  <h2>Payment Method</h2>
-                  <div class="row input-row">
-                    <shop-input>
-                      <input type="text" id="ccName" name="ccName" pattern=".{3,}"
-                          placeholder="Cardholder Name" required
-                          autocomplete="cc-name">
-                      <shop-md-decorator error-message="Invalid Cardholder Name" aria-hidden="true">
-                        <label for="ccName">Cardholder Name</label>
-                        <shop-underline></shop-underline>
-                      </shop-md-decorator>
-                    </shop-input>
-                  </div>
-                  <div class="row input-row">
-                    <shop-input>
-                      <input type="tel" id="ccNumber" name="ccNumber" pattern="[\\d\\s]{15,}"
-                          placeholder="Card Number" required
-                          autocomplete="cc-number">
-                      <shop-md-decorator error-message="Invalid Card Number" aria-hidden="true">
-                        <label for="ccNumber">Card Number</label>
-                        <shop-underline></shop-underline>
-                      </shop-md-decorator>
-                    </shop-input>
-                  </div>
-                  <div class="row input-row">
-                    <div class="column">
-                      <label for="ccExpMonth">Expiry</label>
-                      <shop-select>
-                        <select id="ccExpMonth" name="ccExpMonth" required
-                            autocomplete="cc-exp-month" aria-label="Expiry month">
-                          <option value="01" selected>Jan</option>
-                          <option value="02">Feb</option>
-                          <option value="03">Mar</option>
-                          <option value="04">Apr</option>
-                          <option value="05">May</option>
-                          <option value="06">Jun</option>
-                          <option value="07">Jul</option>
-                          <option value="08">Aug</option>
-                          <option value="09">Sep</option>
-                          <option value="10">Oct</option>
-                          <option value="11">Nov</option>
-                          <option value="12">Dec</option>
-                        </select>
-                        <shop-md-decorator aria-hidden="true">
-                          <shop-underline></shop-underline>
-                        </shop-md-decorator>
-                      </shop-select>
-                    </div>
-                    <shop-select>
-                      <select id="ccExpYear" name="ccExpYear" required
-                          autocomplete="cc-exp-year" aria-label="Expiry year">
-                        <option value="2016" selected>2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                      </select>
-                      <shop-md-decorator aria-hidden="true">
-                        <shop-underline></shop-underline>
-                      </shop-md-decorator>
-                    </shop-select>
-                    <shop-input>
-                      <input type="tel" id="ccCVV" name="ccCVV" pattern="\\d{3,4}"
-                          placeholder="CVV" required
-                          autocomplete="cc-csc">
-                      <shop-md-decorator error-message="Invalid CVV" aria-hidden="true">
-                        <label for="ccCVV">CVV</label>
-                        <shop-underline></shop-underline>
-                      </shop-md-decorator>
-                    </shop-input>
-                  </div>
                   <h2>Order Summary</h2>
                   ${repeat(cartList, entry => html`
                     <div class="row order-summary-row">
@@ -392,10 +247,19 @@ class ShopCheckout extends connect(store)(PageViewElement) {
                     <div class="flex">Total</div>
                     <div>$${this._total.toFixed(2)}</div>
                   </div>
-                  <shop-button responsive id="submitBox">
-                    <input type="button" @click="${this._submit}" value="Place Order">
-                  </shop-button>
+                  ${this.systemReady ?
+                    html`
+                      <shop-button responsive id="submitBox">
+                        <input type="button" @click="${this._submit}" value="Place Order">
+                      </shop-button>
+                    ` :
+                    html`Preparing checkout system...`
+                  }
                 </section>
+                <jc-checkout 
+                  @dbReady=${()=>this.systemReady=true}
+                  @checkoutResponse=${this.checkoutResponse}>
+                </jc-checkout>
               </div>
             `}
           </form>
@@ -422,6 +286,10 @@ class ShopCheckout extends connect(store)(PageViewElement) {
 
     <!-- Show spinner when waiting for the server to repond -->
     <paper-spinner-lite ?active="${this._waiting}"></paper-spinner-lite>`;
+  }
+
+  get jcCheckout() {
+    return this.shadowRoot.querySelector("jc-checkout");
   }
 
   static get properties() { return {
@@ -455,7 +323,8 @@ class ShopCheckout extends connect(store)(PageViewElement) {
     /**
      * True when waiting for the server to repond.
      */
-    _waiting: { type: Boolean }
+    _waiting: { type: Boolean },
+    systemReady: { type: Boolean }
 
   }}
 
@@ -463,18 +332,55 @@ class ShopCheckout extends connect(store)(PageViewElement) {
     this._cart = state.cart;
     this._total = totalSelector(state);
     this._state = state.checkout.state;
+    if (state.app.auth) {
+      fetch("/src/jc-checkout.json").then(response => { // load the file data
+        return response.json()
+      }).then(json => {
+        this.jcCheckout.setLocalConfig(json.prefix, json.region, true);
+      }).catch(e => {
+        console.log("ERROR : ", e)
+        return e
+      })
+    }
+  }
+
+  checkoutResponse(e) {
+    if (e.detail.orderNo) {
+      this._didReceiveResponse({
+        "success": 1,
+        "successMessage": `Your order id: ${e.detail.orderNo} has been received.`
+      });
+    } else {
+      this._didReceiveResponse({
+        "error": 1,
+        "errorMessage": "Transaction failed."
+      });
+    }
   }
 
   _submit() {
     const checkoutForm = this.shadowRoot.querySelector('#checkoutForm');
     if (this._validateForm(checkoutForm)) {
-      this._sendRequest(checkoutForm)
-      .then(res => res.json())
-      .then(data => this._didReceiveResponse(data))
-      .catch(_ => this._didReceiveResponse({
-        error: 1,
-        errorMessage: 'Transaction failed.'
-      }));
+      const accountData = {};
+      for (let el, i = 0; el = checkoutForm.elements[i], i < checkoutForm.elements.length; i++) {
+        if (el.name) {
+          accountData[el.name] = el.value;
+        }
+      }
+      const cart = [];
+      for (let [key] of Object.entries(this._cart)) {
+        const item = {
+          qty: this._cart[key].quantity,
+          size: this._cart[key].size
+        }
+        for (let [k, v] of Object.entries(this._cart[key].item)) {
+          if (k == "price" || k == "title") {
+            item[k] = v;
+          }
+        }
+        cart.push(item)
+      }
+      this.jcCheckout.data = {accountData, cart};
     }
   }
 
