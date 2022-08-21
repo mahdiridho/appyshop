@@ -12,6 +12,7 @@
 import "./shop-icons.js";
 import "./shop-analytics.js";
 import "./shop-cart-button.js";
+import "./shop-login-button.js";
 import "./shop-cart-modal.js";
 import "./shop-snackbar.js";
 import "./shop-tabs.js";
