@@ -12,6 +12,7 @@
     "build": "rimraf build && rollup -c rollup.config.js"
   },
   "dependencies": {
+    "@jcshop/jc-chat": "file:.yalc/@jcshop/jc-chat",
     "@jcshop/jc-checkout": "file:.yalc/@jcshop/jc-checkout",
     "@polymer/app-layout": "^3.0.0",
     "@polymer/iron-icon": "^3.0.0",

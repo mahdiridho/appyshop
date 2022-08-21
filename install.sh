@@ -7,7 +7,7 @@ echo
 # populating devops
 ./initial-setup.js
 
-requirements='@jcshop/jc-checkout'
+requirements='@jcshop/jc-checkout @jcshop/jc-chat'
 yalcDir=`yalc dir`
 
 # deleting old packages
