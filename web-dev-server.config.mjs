@@ -7,11 +7,7 @@ export default /** @type {import('@web/dev-server').DevServerConfig} */ ({
   nodeResolve: true,
   open: '/',
   watch: !hmr,
-  protocol: "https",
-  hostname: "0.0.0.0",
   port: 8000,
-  http2: true,
-
 
   /** Compile JS for older browsers. Requires @web/dev-server-esbuild plugin */
   // esbuildTarget: 'auto'
