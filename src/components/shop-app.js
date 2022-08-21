@@ -8,7 +8,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { repeat } from 'lit-html/directives/repeat.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
@@ -27,6 +27,8 @@ import { metaSelector } from '../reducers/app.js';
 import { updateLocation, updateNetworkStatus, updateDrawerState } from '../actions/app.js';
 
 import './shop-home.js';
+
+import './shop-chat.js';
 
 class ShopApp extends connect(store)(LitElement) {
   render() {
@@ -91,6 +93,10 @@ class ShopApp extends connect(store)(LitElement) {
       }
 
       shop-cart-button {
+        display: block;
+        width: 40px;
+      }
+      shop-login-button {
         display: block;
         width: 40px;
       }
@@ -191,6 +197,27 @@ class ShopApp extends connect(store)(LitElement) {
         text-transform: uppercase;
       }
 
+      img#support {
+        width: 50px;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        cursor: pointer;
+      }
+
+      div[hidden] {
+        display: none;
+      }
+
+      div#jcchat {
+        width: 300px;
+        height: 400px;
+        position: fixed;
+        bottom: 10px;
+        right: 70px;
+        background-color: #ccc;
+      }
+
       /* small screen */
       @media (max-width: 767px) {
         :host {
@@ -217,6 +244,7 @@ class ShopApp extends connect(store)(LitElement) {
         </div>
         <div class="logo" main-title><a href="/" aria-label="SHOP Home">SHOP</a></div>
         <shop-cart-button></shop-cart-button>
+        <shop-login-button></shop-login-button>
       </app-toolbar>
 
       <!-- Lazy-create the tabs for larger screen sizes. -->
@@ -279,7 +307,41 @@ class ShopApp extends connect(store)(LitElement) {
       <shop-snackbar class="${this._snackbarOpened ? 'opened' : ''}">
         ${this._offline ? 'You are offline' : 'You are online'}
       </shop-snackbar>
-    ` : null}`;
+    ` : null}
+    ${this.auth ?
+      html`<img id='support' src="/images/support.svg" title="Live Support" @click=${this.support}>` :
+      nothing
+    }
+    ${this.liveChat ?
+      html`<div id="jcchat">
+        <shop-chat></shop-chat>
+      </div>` :
+      nothing
+    }
+    `;
+  }
+
+  get jcChat() {
+    return this.shadowRoot.querySelector("shop-chat");
+  }
+
+  support() {
+    if (this.liveChat) {
+      this.liveChat = false;
+    } else {
+      fetch("/src/jc-chat.json").then(response => { // load the file data
+        return response.json()
+      }).then(json => {
+        this.liveChat = true;
+        this.updateComplete.then(() => {
+          this.jcChat.db.setLocalConfig(json.prefix, json.region, true);
+          this.jcChat.sqs.setLocalConfig(json.prefix, json.region, true);
+        })
+      }).catch(e => {
+        console.log("ERROR : ", e)
+        return e
+      })
+    }
   }
 
   static get properties() { return {
@@ -304,6 +366,8 @@ class ShopApp extends connect(store)(LitElement) {
     _drawerOpened: { type: Boolean },
 
     _smallScreen: { type: Boolean },
+    auth: { type: Boolean },
+    liveChat: { type: Boolean }
   }}
 
   updated(changedProps) {
@@ -356,6 +420,7 @@ class ShopApp extends connect(store)(LitElement) {
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
     this._drawerOpened = state.app.drawerOpened;
+    this.auth = state.app.auth;
   }
 
   _menuButtonClicked() {
