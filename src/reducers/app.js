@@ -16,7 +16,8 @@ import {
   CLOSE_MODAL,
   UPDATE_NETWORK_STATUS,
   CLOSE_SNACKBAR,
-  UPDATE_DRAWER_STATE
+  UPDATE_DRAWER_STATE,
+  SET_AUTH
 } from '../actions/app.js';
 import { ADD_TO_CART } from '../actions/cart.js';
 import { currentCategorySelector, currentItemSelector } from './categories.js';
@@ -73,6 +74,11 @@ const app = (state = {}, action) => {
       return {
         ...state,
         drawerOpened: action.opened
+      };
+    case SET_AUTH:
+      return {
+        ...state,
+        auth: action.auth
       };
     default:
       return state;

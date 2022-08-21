@@ -19,6 +19,7 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const UPDATE_NETWORK_STATUS = 'UPDATE_NETWORK_STATUS';
 export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
+export const SET_AUTH = "SET_AUTH";
 
 export const reloadCategory = () => async (dispatch, getState) => {
   let state = getState();
@@ -160,3 +161,10 @@ export const updateDrawerState = (opened) => {
     opened
   };
 };
+
+export const setAuth = (auth) => {
+  return {
+    type: SET_AUTH,
+    auth
+  };
+}
