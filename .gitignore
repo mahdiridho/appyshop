@@ -6,3 +6,8 @@ build-modnomod
 .DS_Store
 .vscode
 package-lock.json
+.yalc
+yalc.lock
+config.json
+jc-checkout.json
+jc-chat.json
